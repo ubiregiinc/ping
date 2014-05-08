@@ -68,6 +68,7 @@ GEM
     mime-types (1.25.1)
     minitest (5.3.3)
     multi_json (1.10.0)
+    pg (0.17.1)
     polyglot (0.3.4)
     rack (1.5.2)
     rack-test (0.6.2)
@@ -143,6 +144,7 @@ DEPENDENCIES
   httpclient
   jbuilder (~> 2.0)
   jquery-rails
+  pg
   rails (= 4.1.0)
   rr
   sass-rails (~> 4.0.3)
