@@ -38,3 +38,10 @@ gem 'spring',        group: :development
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
+gem 'httpclient'
+
+group :test do
+  gem 'webmock', require: false
+  gem 'rr', require: false
+  gem "unification_assertion", git: "git@github.com:soutaro/unification_assertion.git"
+end
