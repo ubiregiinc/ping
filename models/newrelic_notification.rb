@@ -1,5 +1,8 @@
+require "active_model"
+require 'httpclient'
+
 class NewrelicNotification
-  include ActiveModel::Model
+  include ActiveModel::Validations
   attr_reader :api_key, :app_id, :user, :revision, :git_log
 
   validates_presence_of :api_key, :app_id

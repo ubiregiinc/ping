@@ -1,7 +1,7 @@
 require 'test_helper'
 
-class NewrelicNotificationTest < ActiveSupport::TestCase
-  setup do
+class NewrelicNotificationTest < TestCase
+  def setup
     @notification = NewrelicNotification.new(api_key: "topsecret",
                                              app_id: 111123,
                                              user: "Super User",
@@ -11,7 +11,7 @@ class NewrelicNotificationTest < ActiveSupport::TestCase
 
   attr_reader :notification
 
-  test "send notification" do
+  def test_send_notification
     stub_request :any, "https://api.newrelic.com/deployments.xml"
 
     notification.notify!
@@ -27,15 +27,16 @@ class NewrelicNotificationTest < ActiveSupport::TestCase
     end
   end
 
-  test "Notification failure by HTTP status code" do
+  def test_notification_failure_by_HTTP_status_code
     stub_request(:any, "https://api.newrelic.com/deployments.xml").to_return(:body => "abc", :status => 400)
 
-    assert_raise HTTPClient::BadResponseError do
+
+    assert_raises HTTPClient::BadResponseError do
       notification.notify!
     end
   end
 
-  test "validation should test app_id and api_key have to be present" do
+  def test_validation_should_test_app_id_and_api_key_to_be_present
     notification = NewrelicNotification.new(api_key: "", app_id: "", user: nil, revision: nil, git_log: nil)
     refute notification.valid?
     assert_equal [:api_key, :app_id], notification.errors.keys
