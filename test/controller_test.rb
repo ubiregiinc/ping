@@ -24,7 +24,7 @@ class ControllerTest < TestCase
       mock(n).notify!
     }
 
-    post '/notify', { "app_id" => "123456", "user" => "Soutaro Matsumoto", "head_long" => "testtest", 'git_log' => "Git Log Message"}
+    post '/notify', { "app" => "finger and register", "user" => "Soutaro Matsumoto", "head_long" => "testtest", 'git_log' => "Git Log Message"}
 
     assert last_response.ok?
   end
