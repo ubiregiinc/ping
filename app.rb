@@ -1,6 +1,7 @@
 require 'sinatra/base'
 
 require_relative "models/newrelic_notification"
+require_relative "models/airbrake_notification"
 
 class Server < Sinatra::Base
   post '/notify' do
