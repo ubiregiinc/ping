@@ -4,27 +4,36 @@ class ControllerTest < TestCase
   include Rack::Test::Methods
 
   def setup
-    ENV["NEWRELIC_API_KEY"] = "example"
-    ENV["NEWRELIC_APP_ID"] = "123456"
+    ENV['NEWRELIC_API_KEY'] = 'example'
+    ENV['NEWRELIC_APP_ID'] = '123456'
+
+    ENV['AIRBRAKE_API_KEY'] = 'airbrake_api_key'
+    ENV['AIRBRAKE_RAILS_ENV'] = 'production'
+    ENV['AIRBRAKE_REPOSITORY'] = 'git@github.com:ubiregiinc/ping.git'
   end
 
   def teardown
-    ENV.delete("NEWRELIC_API_KEY")
-    ENV.delete("NEWRELIC_APP_ID")
+    ENV.delete('NEWRELIC_API_KEY')
+    ENV.delete('NEWRELIC_APP_ID')
+    ENV.delete('AIRBRAKE_API_KEY')
+    ENV.delete('AIRBRAKE_RAILS_ENV')
+    ENV.delete('AIRBRAKE_REPOSITORY')
   end
 
   def app
     Server
   end
 
-  def test_should_send_notification_to_newrelic
-    stub_request :any, "https://api.newrelic.com/deployments.xml"
-
-    mock.proxy(NewrelicNotification).new(api_key: "example", app_id: "123456", user: "Soutaro Matsumoto", revision: "testtest", git_log: "Git Log Message") {|n|
+  def test_sending_notifications
+    mock.proxy(NewrelicNotification).new(api_key: "example", app_id: "123456", user: "soutaro", revision: "testtest", git_log: "Git Log Message") {|n|
       mock(n).notify!
     }
 
-    post '/notify', { "app" => "finger and register", "user" => "Soutaro Matsumoto", "head_long" => "testtest", 'git_log' => "Git Log Message"}
+    mock.proxy(AirbrakeNotification).new(api_key: "airbrake_api_key", rails_env: "production", scm_repository: "git@github.com:ubiregiinc/ping.git", scm_revision: "testtest", local_username: "soutaro") do |n|
+      mock(n).notify!
+    end
+
+    post '/notify', { "app" => "finger and register", "user" => "soutaro", "head_long" => "testtest", 'git_log' => "Git Log Message"}
 
     assert last_response.ok?
   end
