@@ -11,6 +11,6 @@ group :test do
   gem 'minitest'
   gem 'webmock'
   gem 'rr'
-  gem 'unification_assertion', git: "https://github.com/soutaro/unification_assertion.git"
+  gem 'unification_assertion'
   gem 'rack-test'
 end
