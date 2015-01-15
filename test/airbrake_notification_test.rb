@@ -2,6 +2,8 @@ require "test_helper"
 
 class AirbrakeNotificationTest < TestCase
   def setup
+    super
+    
     @notification = AirbrakeNotification.new(api_key: "111123",
                                              rails_env: "production",
                                              local_username: "Super User",

@@ -4,6 +4,8 @@ class ControllerTest < TestCase
   include Rack::Test::Methods
 
   def setup
+    super
+    
     ENV['NEWRELIC_API_KEY'] = 'example'
     ENV['NEWRELIC_APP_ID'] = '123456'
 
@@ -13,6 +15,8 @@ class ControllerTest < TestCase
   end
 
   def teardown
+    super
+
     ENV.delete('NEWRELIC_API_KEY')
     ENV.delete('NEWRELIC_APP_ID')
     ENV.delete('AIRBRAKE_API_KEY')
