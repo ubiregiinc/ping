@@ -2,6 +2,7 @@ require 'sinatra/base'
 
 require_relative "models/newrelic_notification"
 require_relative "models/airbrake_notification"
+require_relative "models/slack_notification"
 
 class Server < Sinatra::Base
   post '/notify' do
@@ -23,6 +24,14 @@ class Server < Sinatra::Base
                                     scm_repository: ENV['AIRBRAKE_REPOSITORY'])
 
       an.notify!
+    end
+
+    if ENV["SLACK_HOOK_URL"]
+      sn = SlackNotification.new(hook_url: ENV["SLACK_HOOK_URL"],
+                                 app: params[:app],
+                                 revision: params[:head_long],
+                                 git_log: params[:git_log])
+      sn.notify!
     end
 
     "ok"
