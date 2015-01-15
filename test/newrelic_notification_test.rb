@@ -2,6 +2,8 @@ require 'test_helper'
 
 class NewrelicNotificationTest < TestCase
   def setup
+    super
+
     @notification = NewrelicNotification.new(api_key: "topsecret",
                                              app_id: 111123,
                                              user: "Super User",
@@ -29,7 +31,6 @@ class NewrelicNotificationTest < TestCase
 
   def test_notification_failure_by_HTTP_status_code
     stub_request(:any, "https://api.newrelic.com/deployments.xml").to_return(:body => "abc", :status => 400)
-
 
     assert_raises HTTPClient::BadResponseError do
       notification.notify!
