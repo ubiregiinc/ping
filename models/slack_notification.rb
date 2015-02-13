@@ -14,7 +14,7 @@ class SlackNotification
   end
 
   def notify!
-    message = "#{app} is deployed in #{revision} as:\n#{git_log}"
+    message = "#{app} is deployed in <https://github.com/ubiregiinc/ubiregi-server/commit/#{revision}|#{revision}> as:\n#{git_log}"
     HTTPClient.new.post_content hook_url, { text: message }.to_json
   end
 end
