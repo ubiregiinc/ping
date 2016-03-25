@@ -6,6 +6,7 @@ class SlackNotificationTest < TestCase
 
     @notification = SlackNotification.new(hook_url: "https://example.com/test",
                                           app: "ubiregi-server",
+                                          revision_url: "https://example.com/owner/repo/commit/130487dsfiguha",
                                           revision: "130487dsfiguha",
                                           git_log: "log message")
   end
