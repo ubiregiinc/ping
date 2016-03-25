@@ -26,10 +26,11 @@ class Server < Sinatra::Base
       an.notify!
     end
 
-    if ENV["SLACK_HOOK_URL"]
+    if ENV["SLACK_HOOK_URL"] and ENV['REVISION_URL']
       sn = SlackNotification.new(hook_url: ENV["SLACK_HOOK_URL"],
                                  app: params[:app],
                                  revision: params[:head_long],
+                                 revision_url: ENV["REVISION_URL"] + params[:head_long],
                                  git_log: params[:git_log])
       sn.notify!
     end
