@@ -8,7 +8,9 @@ Heroku deploy hook is provided as an addon, and it is not allowed to have more t
 
 ## Setup
 
-Deploy this as a web app. You can use on Heroku!
+1. Deploy this as a web app. (You can use Heroku!)
+2. Add `Deploy Hooks - HTTP Post Hook` addon to your Heroku app, and configure it to post to the app you have setup at 1.
+3. Deploy your new version!
 
 ## Configure Web Services
 
