@@ -6,6 +6,7 @@ gem 'sinatra'
 gem 'activesupport'
 gem 'activemodel'
 gem 'httpclient'
+gem 'rake'
 
 group :test do
   gem 'minitest'

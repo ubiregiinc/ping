@@ -1,10 +1,10 @@
-require 'minitest'
+require "bundler/setup"
 require 'webmock/minitest'
 require 'rr'
 require 'unification_assertion'
 require 'rack/test'
 
-require File.expand_path('app')
+require 'app'
 
 MiniTest.autorun
 
