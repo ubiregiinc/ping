@@ -15,7 +15,12 @@ class SlackNotification
   end
 
   def notify!
-    message = "#{app} is deployed in <#{revision_url}|#{revision}> as:\n#{git_log}"
+    pointer = if revision_url
+                "<#{revision_url}|#{revision}>"
+              else
+                revision
+              end
+    message = "#{app} is deployed: #{pointer}"
     HTTPClient.new.post_content hook_url, { text: message }.to_json
   end
 end

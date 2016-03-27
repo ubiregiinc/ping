@@ -4,6 +4,13 @@ require_relative "models/newrelic_notification"
 require_relative "models/airbrake_notification"
 require_relative "models/slack_notification"
 
+def revision_url(digest)
+  base = ENV['REVISION_URL_BASE']
+  if base
+    base + digest
+  end
+end
+
 class Server < Sinatra::Base
   post '/notify' do
     if ENV['NEWRELIC_API_KEY'] and ENV['NEWRELIC_APP_ID']
@@ -26,11 +33,11 @@ class Server < Sinatra::Base
       an.notify!
     end
 
-    if ENV["SLACK_HOOK_URL"] and ENV['REVISION_URL']
+    if ENV["SLACK_HOOK_URL"]
       sn = SlackNotification.new(hook_url: ENV["SLACK_HOOK_URL"],
                                  app: params[:app],
                                  revision: params[:head_long],
-                                 revision_url: ENV["REVISION_URL"] + params[:head_long],
+                                 revision_url: revision_url(params[:head_long]),
                                  git_log: params[:git_log])
       sn.notify!
     end
