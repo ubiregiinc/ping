@@ -4,7 +4,7 @@ require 'rr'
 require 'unification_assertion'
 require 'rack/test'
 
-require 'app'
+require File.expand_path('app')
 
 MiniTest.autorun
 

@@ -1,3 +1,4 @@
+$:.unshift File.dirname(__FILE__)
 require 'test_helper'
 
 require 'newrelic_notification_test'

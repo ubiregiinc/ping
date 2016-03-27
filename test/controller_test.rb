@@ -14,6 +14,7 @@ class ControllerTest < TestCase
     ENV['AIRBRAKE_REPOSITORY'] = 'git@github.com:ubiregiinc/ping.git'
 
     ENV["SLACK_HOOK_URL"] = "https://example.com/hook"
+    ENV["REVISION_URL"] = "https://example.com/owner/repo/commit/"
   end
 
   def teardown
@@ -40,11 +41,11 @@ class ControllerTest < TestCase
       mock(n).notify!
     end
 
-    mock.proxy(SlackNotification).new(hook_url: "https://example.com/hook", app: "finger and register", revision: "testtest", git_log: "Git Log Message") do |n|
+    mock.proxy(SlackNotification).new(hook_url: "https://example.com/hook", app: "finger and register", revision_url: "https://example.com/owner/repo/commit/testtest", revision: "testtest", git_log: "Git Log Message") do |n|
       mock(n).notify!
     end
 
-    post '/notify', { "app" => "finger and register", "user" => "soutaro", "head_long" => "testtest", 'git_log' => "Git Log Message"}
+    post '/notify', { "app" => "finger and register", "user" => "soutaro", "revision_url" => "https://example.com/owner/repo/commit/testtest", "head_long" => "testtest", 'git_log' => "Git Log Message"}
 
     assert last_response.ok?
   end
